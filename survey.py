@@ -6,7 +6,6 @@ from unidecode import unidecode
 GENDER_FACTOR = 1
 MEME_FACTOR = 0.25
 
-
 def age_to_number(age):
     if age == "12 or less":
         return 12
@@ -29,7 +28,6 @@ def cat_score(category, user1, user2):
         i += user2[category].count(j)
     return i
 
-
 def gender_interest(user1, user2):
     match1 = is_gender_match(user2["gender"], user1["target_gender"])
     match2 = is_gender_match(user1["gender"], user2["target_gender"])
@@ -47,7 +45,6 @@ def is_gender_match(gender, target_gender):
     else:
         return False
 
-
 def is_meme_match(one, two):
     return not one or not two or one == two
 
@@ -56,10 +53,11 @@ def meme_interest(user1, user2):
     two = user2["meme_subreddit"]
     return 1 + MEME_FACTOR * int(is_meme_match(one, two))
 
-
 def parse_list(s):
     return [unidecode(i.strip()) for i in s.lower().replace("and", ",").split(",") if i]
 
+def parse_username(u):
+    return u.replace(" ", "").lower().split("u/")[-1]
 
 with open("input.csv", newline="") as csvfile:
     users = {}
@@ -67,14 +65,13 @@ with open("input.csv", newline="") as csvfile:
     rows = list(csv.reader(csvfile))
     for row in rows:
         if not row[2]:
-            users[row[1]] = {
+            users[parse_username(row[1])] = {
                 "age": row[3],
                 "gender": row[7],
                 "interests": parse_list(row[4]),
                 "meme_subreddit": parse_list(row[8]),
                 "subreddits": parse_list(row[5]),
                 "target_gender": row[6],
-                "username": row[1],
             }
 
     matches = []
