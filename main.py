@@ -1,3 +1,7 @@
+# This script reads from a file `input.csv` that has been *directly* exported
+# from our spreadsheet in CSV format. It outputs a CSV-formatted list of paired
+# users to standard output.
+
 import csv
 import operator
 import scoreboard
@@ -40,6 +44,6 @@ with open("input.csv", newline="") as csvfile:
     matches.sort(key=operator.itemgetter(0), reverse=True)
     for (score, name1, name2) in matches:
         if name1 in users and name2 in users:
-            print(name1, name2)
+            print(f"{name1},{name2}")
             del users[name1]
             del users[name2]
