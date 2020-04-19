@@ -1,6 +1,7 @@
-# This script reads from a file `input.csv` that has been *directly* exported
-# from our spreadsheet in CSV format. It outputs a CSV-formatted list of paired
-# users to standard output.
+"""This script reads from a file `input.csv` that has been *directly* exported
+from our spreadsheet in CSV format. It outputs a CSV-formatted list of paired
+users to standard output.
+"""
 
 import csv
 import operator
